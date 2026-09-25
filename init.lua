@@ -17,6 +17,8 @@ vim.opt.expandtab = true
 vim.opt.smartindent = true
 vim.opt.smarttab = true
 
+require('vim._core.ui2').enable({})
+
 local gh = function(path)
   return 'https://github.com/' .. path
 end
@@ -52,4 +54,5 @@ vim.api.nvim_create_autocmd("LspAttach", {
 -- TODO: omnisharp
 -- TODO: fzf-lua
 -- TODO: which-key
+-- TODO: lualine
 
