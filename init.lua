@@ -50,9 +50,13 @@ vim.api.nvim_create_autocmd("LspAttach", {
   end,
 })
 
--- TODO: lsp-config
--- TODO: omnisharp
 -- TODO: fzf-lua
 -- TODO: which-key
 -- TODO: lualine
+-- TODO: sessions
+-- TODO: startup banner
+-- TODO: lsp-config
+-- TODO: omnisharp
+-- TODO: publish to github
+-- TODO: function and keybinding to update packages
 
