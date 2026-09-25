@@ -25,3 +25,7 @@ vim.pack.add({
 })
 
 vim.cmd("colorscheme nord")
+
+vim.pack.add({
+  { src = gh("nvim-treesitter/nvim-treesitter"), version = "main" },
+})
