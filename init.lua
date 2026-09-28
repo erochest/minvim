@@ -50,7 +50,12 @@ vim.api.nvim_create_autocmd("LspAttach", {
   end,
 })
 
--- TODO: fzf-lua
+
+vim.pack.add({
+  { src = gh('nvim-tree/nvim-web-devicons') },
+  { src = gh('ibhagwan/fzf-lua') },
+})
+
 -- TODO: which-key
 -- TODO: lualine
 -- TODO: sessions
