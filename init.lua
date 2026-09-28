@@ -56,7 +56,13 @@ vim.pack.add({
   { src = gh('ibhagwan/fzf-lua') },
 })
 
--- TODO: which-key
+vim.pack.add({
+  { src = gh('folke/which-key.nvim') },
+})
+
+require('which-key').setup({})
+
+-- TODO: fzf-lua keymaps
 -- TODO: lualine
 -- TODO: sessions
 -- TODO: startup banner
