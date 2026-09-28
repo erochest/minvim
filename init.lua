@@ -130,8 +130,21 @@ require('lualine').setup({
   options = { theme = "nord" },
 })
 
+vim.pack.add({
+  { src = gh("folke/persistence.nvim") },
+})
+
+wk.add({
+  { "<leader>q", group = "Quit" },
+})
+
+nmap("Load session", "<leader>qs", function() require("persistence").load() end)
+nmap("Select session", "<leader>qS", function() require("persistence").select() end)
+nmap("Last session", "<leader>ql", function() require("persistence").load({ last = true }) end)
+nmap("Stop session saving", "<leader>qd", function() require("persistence").stop() end)
+
 -- TODO: publish to github
--- TODO: sessions
+-- TODO: projects
 -- TODO: startup banner
 -- TODO: lsp-config
 -- TODO: omnisharp or other dotnet plugin
