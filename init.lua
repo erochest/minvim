@@ -1,5 +1,5 @@
 
-vim.g.mapleader = ","
+vim.g.mapleader = " "
 vim.opt.shortmess:append("c")
 vim.opt.cmdheight = 2
 vim.opt.number = true
@@ -21,6 +21,10 @@ require('vim._core.ui2').enable({})
 
 local gh = function(path)
   return 'https://github.com/' .. path
+end
+
+local nmap = function(description, keys, definition)
+  vim.keymap.set('n', keys, definition, { silent = true, desc = description })
 end
 
 vim.pack.add({
@@ -50,24 +54,77 @@ vim.api.nvim_create_autocmd("LspAttach", {
   end,
 })
 
+vim.pack.add({
+  { src = gh('folke/which-key.nvim') },
+})
+
+local wk = require('which-key')
+wk.setup({})
 
 vim.pack.add({
   { src = gh('nvim-tree/nvim-web-devicons') },
   { src = gh('ibhagwan/fzf-lua') },
 })
 
-vim.pack.add({
-  { src = gh('folke/which-key.nvim') },
-})
+require('fzf-lua').setup({'fzf-native'})
 
-require('which-key').setup({})
+nmap('Global picker', '<leader><space>', '<cmd>FzfLua global<cr>')
+nmap('Grep picker', '<leader>/', '<cmd>FzfLua grep<cr>')
+nmap('Help', '<leader>h', '<cmd>FzfLua helptags<cr>')
+nmap('Undo', '<leader>u', '<cmd>FzfLua undotree<cr>')
 
--- TODO: fzf-lua keymaps
+wk.add({ "<leader>s", group = "Search" })
+nmap('Buffer picker', '<leader>sb', '<cmd>FzfLua buffers<cr>')
+nmap('Files picker', '<leader>ss', '<cmd>FzfLua files<cr>')
+nmap('Lines picker', '<leader>sl', '<cmd>FzfLua blines<cr>')
+
+wk.add({ "<leader>g", group = "Git/JJ" })
+nmap('Git Commit picker', '<leader>gc', '<cmd>FzfLua git_commits<cr>')
+nmap('Git File History', '<leader>gh', '<cmd>FzfLua git_bcommits<cr>')
+nmap('Git blame', '<leader>gB', '<cmd>FzfLua git_blame<cr>')
+nmap('Git branches', '<leader>gb', '<cmd>FzfLua git_branches<cr>')
+
+wk.add({ "<leader>v", group = "Vim" })
+nmap('Colorschemes', '<leader>vC', '<cmd>FzfLua colorschemes<cr>')
+nmap('Commands', '<leader>vc', '<cmd>FzfLua commands<cr>')
+nmap('Jumps', '<leader>vj', '<cmd>FzfLua jumps <cr>')
+nmap('Registers', '<leader>vr', '<cmd>FzfLua registers<cr>')
+nmap('Options', '<leader>vo', '<cmd>FzfLua options<cr>')
+nmap('Keymaps', '<leader>vk', '<cmd>FzfLua keymaps<cr>')
+
+-- LSP pickers
+-- lsp_references	References
+-- lsp_definitions	Definitions
+-- lsp_declarations	Declarations
+-- lsp_typedefs	Type Definitions
+-- lsp_implementations	Implementations
+-- lsp_document_symbols	Document Symbols
+-- lsp_workspace_symbols	Workspace Symbols
+-- lsp_live_workspace_symbols	Workspace Symbols (live query)
+-- lsp_incoming_calls	Incoming Calls
+-- lsp_outgoing_calls	Outgoing Calls
+-- lsp_type_sub	Sub Types
+-- lsp_type_super	Super Types
+-- lsp_code_actions	Code Actions
+-- lsp_finder	All LSP locations, combined view
+-- diagnostics_document	Document Diagnostics
+-- diagnostics_workspace	Workspace Diagnostics
+-- lsp_document_diagnostics	alias to diagnostics_document
+-- lsp_workspace_diagnostics	alias to diagnostics_workspace
+
+-- DAP pickers
+-- dap_commands	list,run nvim-dap builtin commands
+-- dap_configurations	list,run debug configurations
+-- dap_breakpoints	list,delete breakpoints
+-- dap_variables	active session variables
+-- dap_frames	active session jump to frame
+
+-- TODO: publish to github
 -- TODO: lualine
 -- TODO: sessions
 -- TODO: startup banner
 -- TODO: lsp-config
--- TODO: omnisharp
--- TODO: publish to github
+-- TODO: omnisharp or other dotnet plugin
+-- TODO: nvim-dap
 -- TODO: function and keybinding to update packages
 
