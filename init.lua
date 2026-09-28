@@ -31,7 +31,6 @@ vim.pack.add({
   gh("shaunsingh/nord.nvim"),
 })
 
-vim.cmd("colorscheme nord")
 
 vim.pack.add({
   { src = gh("nvim-treesitter/nvim-treesitter"), version = "main" },
@@ -55,6 +54,10 @@ vim.api.nvim_create_autocmd("LspAttach", {
 })
 
 vim.pack.add({
+  { src = gh('nvim-tree/nvim-web-devicons') },
+})
+
+vim.pack.add({
   { src = gh('folke/which-key.nvim') },
 })
 
@@ -62,7 +65,6 @@ local wk = require('which-key')
 wk.setup({})
 
 vim.pack.add({
-  { src = gh('nvim-tree/nvim-web-devicons') },
   { src = gh('ibhagwan/fzf-lua') },
 })
 
@@ -119,8 +121,16 @@ nmap('Keymaps', '<leader>vk', '<cmd>FzfLua keymaps<cr>')
 -- dap_variables	active session variables
 -- dap_frames	active session jump to frame
 
+vim.pack.add({
+  { src = gh("nvim-lualine/lualine.nvim") },
+})
+
+vim.cmd("colorscheme nord")
+require('lualine').setup({
+  options = { theme = "nord" },
+})
+
 -- TODO: publish to github
--- TODO: lualine
 -- TODO: sessions
 -- TODO: startup banner
 -- TODO: lsp-config
