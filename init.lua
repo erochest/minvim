@@ -77,11 +77,13 @@ local fzf_vim_config = function()
 end
 
 nmap('Global picker', '<leader><space>', '<cmd>FzfLua global<cr>')
+nmap('Files', '<leader>f', '<cmd>FzfLua files<cr>')
 nmap('Grep picker', '<leader>/', '<cmd>FzfLua grep<cr>')
 nmap('Help', '<leader>h', '<cmd>FzfLua helptags<cr>')
 nmap('Undo', '<leader>u', '<cmd>FzfLua undotree<cr>')
 nmap('Buffers', '<leader>,', '<cmd>FzfLua buffers<cr>')
 nmap('Last buffer', '<leader>\'', '<cmd>buffer #<cr>')
+nmap('Directory', '<leader>.', '<cmd>Oil<cr>')
 
 wk.add({ "<leader>s", group = "Search" })
 nmap('Buffers', '<leader>sb', '<cmd>FzfLua buffers<cr>')
@@ -209,6 +211,13 @@ require('dashboard').setup {
         key = 'f',
       },
       {
+        icon = '\u{eaf7} ',
+        desc = 'CWD',
+        group = 'Label',
+        action = 'Oil',
+        key = 'd',
+      },
+      {
         icon = '\u{f12e1} ',
         desc = 'Recent Files',
         group = 'Label',
@@ -246,6 +255,13 @@ require('dashboard').setup {
     },
   },
 }
+
+
+vim.pack.add({
+    gh('stevearc/oil.nvim'),
+})
+require("oil").setup()
+nmap("Browse cwd", "<leader>sd", "<cmd>Oil<cr>")
 
 -- TODO: publish to github
 -- TODO: lsp-config
