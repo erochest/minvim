@@ -70,6 +70,12 @@ vim.pack.add({
 
 require('fzf-lua').setup({'fzf-native'})
 
+local fzf_vim_config = function()
+  require('fzf-lua').files({
+    cwd = vim.fn.stdpath('config'),
+  })
+end
+
 nmap('Global picker', '<leader><space>', '<cmd>FzfLua global<cr>')
 nmap('Grep picker', '<leader>/', '<cmd>FzfLua grep<cr>')
 nmap('Help', '<leader>h', '<cmd>FzfLua helptags<cr>')
@@ -79,8 +85,9 @@ nmap('Last buffer', '<leader>\'', '<cmd>buffer #<cr>')
 
 wk.add({ "<leader>s", group = "Search" })
 nmap('Buffers', '<leader>sb', '<cmd>FzfLua buffers<cr>')
-nmap('Files picker', '<leader>ss', '<cmd>FzfLua files<cr>')
-nmap('Lines picker', '<leader>sl', '<cmd>FzfLua blines<cr>')
+nmap('Files', '<leader>ss', '<cmd>FzfLua files<cr>')
+nmap('Lines', '<leader>sl', '<cmd>FzfLua blines<cr>')
+nmap('Vim Config', '<leader>sv', fzf_vim_config)
 
 wk.add({ "<leader>g", group = "Git/JJ" })
 nmap('Git Commit picker', '<leader>gc', '<cmd>FzfLua git_commits<cr>')
@@ -162,8 +169,85 @@ require('project-fzf').setup()
 -- Map <leader>fp to open projects
 nmap("Search projects", "<leader>sp", "<cmd>ProjectFzf<CR>")
 
+vim.pack.add({
+  { src = gh("nvimdev/dashboard-nvim") },
+})
+
+
+local dashboard_custom_header = {
+ ' ███╗   ██╗ ███████╗ ██████╗  ██╗   ██╗ ██╗ ███╗   ███╗',
+ ' ████╗  ██║ ██╔════╝██╔═══██╗ ██║   ██║ ██║ ████╗ ████║',
+ ' ██╔██╗ ██║ █████╗  ██║   ██║ ██║   ██║ ██║ ██╔████╔██║',
+ ' ██║╚██╗██║ ██╔══╝  ██║   ██║ ╚██╗ ██╔╝ ██║ ██║╚██╔╝██║',
+ ' ██║ ╚████║ ███████╗╚██████╔╝  ╚████╔╝  ██║ ██║ ╚═╝ ██║',
+ ' ╚═╝  ╚═══╝ ╚══════╝ ╚═════╝    ╚═══╝   ╚═╝ ╚═╝     ╚═╝',
+}
+
+-- TODO: how to modify project section?
+-- TODO: how to modify mru section?
+-- TODO: customize footer. to what?
+require('dashboard').setup {
+  config = {
+    -- header = dashboard_custom_header,
+    footer = {},
+    week_header = {
+      enable = true,
+    },
+    project = {
+      enable = false,
+      action = 'ProjectFzf',
+    },
+    mru = {
+      enable = false,
+    },
+    shortcut = {
+      {
+        icon = '\u{ea7b} ',
+        desc = 'Files',
+        group = 'Label',
+        action = 'FzfLua files',
+        key = 'f',
+      },
+      {
+        icon = '\u{f12e1} ',
+        desc = 'Recent Files',
+        group = 'Label',
+        action = 'FzfLua oldfiles',
+        key = 'r',
+      },
+      {
+        icon = '\u{f002} ',
+        desc = 'Grep',
+        group = 'Label',
+        action = 'FzfLua grep',
+        key = '/',
+      },
+      {
+        icon = '\u{ec77} ',
+        desc = 'Sessions',
+        group = 'Label',
+        action = function() require("persistence").select() end,
+        key = 's',
+      },
+      {
+        icon = '\u{f502} ',
+        desc = 'Projects',
+        group = 'Label',
+        action = 'ProjectFzf',
+        key = 'p',
+      },
+      {
+        icon = '\u{e62b} ',
+        desc = 'Vim Config',
+        group = 'Label',
+        action = fzf_vim_config,
+        key = 'v',
+      },
+    },
+  },
+}
+
 -- TODO: publish to github
--- TODO: startup banner
 -- TODO: lsp-config
 -- TODO: omnisharp or other dotnet plugin
 -- TODO: nvim-dap
