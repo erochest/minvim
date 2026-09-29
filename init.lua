@@ -273,7 +273,7 @@ vim.pack.add{
 }
 
 require("mason").setup()
-nmap("Mason", "<leader>v", "<cmd>Mason<cr>")
+nmap("Mason", "<leader>vm", "<cmd>Mason<cr>")
 
 wk.add({ "<leader>c", group = "Code" })
 vim.api.nvim_create_autocmd('LspAttach', {
