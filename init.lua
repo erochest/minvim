@@ -74,9 +74,11 @@ nmap('Global picker', '<leader><space>', '<cmd>FzfLua global<cr>')
 nmap('Grep picker', '<leader>/', '<cmd>FzfLua grep<cr>')
 nmap('Help', '<leader>h', '<cmd>FzfLua helptags<cr>')
 nmap('Undo', '<leader>u', '<cmd>FzfLua undotree<cr>')
+nmap('Buffers', '<leader>,', '<cmd>FzfLua buffers<cr>')
+nmap('Last buffer', '<leader>\'', '<cmd>buffer #<cr>')
 
 wk.add({ "<leader>s", group = "Search" })
-nmap('Buffer picker', '<leader>sb', '<cmd>FzfLua buffers<cr>')
+nmap('Buffers', '<leader>sb', '<cmd>FzfLua buffers<cr>')
 nmap('Files picker', '<leader>ss', '<cmd>FzfLua files<cr>')
 nmap('Lines picker', '<leader>sl', '<cmd>FzfLua blines<cr>')
 
