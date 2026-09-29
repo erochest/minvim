@@ -289,8 +289,10 @@ vim.pack.add{
 require("mason").setup()
 nmap("Mason", "<leader>v", "<cmd>Mason<cr>")
 
+-- TODO: nvim-dap
+
+-- TODO: jump and other QOL stuff
 -- TODO: publish to github
 -- TODO: omnisharp or other dotnet plugin
--- TODO: nvim-dap
 -- TODO: function and keybinding to update packages
 
