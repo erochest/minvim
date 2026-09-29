@@ -143,8 +143,24 @@ nmap("Select session", "<leader>qS", function() require("persistence").select() 
 nmap("Last session", "<leader>ql", function() require("persistence").load({ last = true }) end)
 nmap("Stop session saving", "<leader>qd", function() require("persistence").stop() end)
 
+vim.pack.add({
+  { src = gh("ahmedkhalf/project.nvim") },
+})
+
+require('project_nvim').setup({
+  patterns = { ".git", "_darcs", ".hg", ".bzr", ".svn", "Makefile", "package.json", ".jj", "Justfile", ".justfile" },
+})
+
+vim.pack.add({
+  { src = gh("jakobwesthoff/project-fzf.nvim") },
+})
+
+require('project-fzf').setup()
+
+-- Map <leader>fp to open projects
+nmap("Search projects", "<leader>sp", "<cmd>ProjectFzf<CR>")
+
 -- TODO: publish to github
--- TODO: projects
 -- TODO: startup banner
 -- TODO: lsp-config
 -- TODO: omnisharp or other dotnet plugin
