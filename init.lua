@@ -88,6 +88,7 @@ nmap('Directory', '<leader>.', '<cmd>Oil<cr>')
 wk.add({ "<leader>s", group = "Search" })
 nmap('Buffers', '<leader>sb', '<cmd>FzfLua buffers<cr>')
 nmap('Files', '<leader>ss', '<cmd>FzfLua files<cr>')
+nmap('Recent Files', '<leader>ss', '<cmd>FzfLua oldfiles<cr>')
 nmap('Lines', '<leader>sl', '<cmd>FzfLua blines<cr>')
 nmap('Vim Config', '<leader>sv', fzf_vim_config)
 
@@ -189,6 +190,7 @@ local dashboard_custom_header = {
 -- TODO: how to modify mru section?
 -- TODO: customize footer. to what?
 require('dashboard').setup {
+  theme = 'doom',
   config = {
     -- header = dashboard_custom_header,
     footer = {},
@@ -202,27 +204,30 @@ require('dashboard').setup {
     mru = {
       enable = false,
     },
-    shortcut = {
+    center = {
       {
         icon = '\u{ea7b} ',
-        desc = 'Files',
+        desc = 'Browse Files',
         group = 'Label',
         action = 'FzfLua files',
         key = 'f',
+        keymap = 'SPC s s',
       },
       {
         icon = '\u{eaf7} ',
-        desc = 'CWD',
+        desc = 'Browse Directory',
         group = 'Label',
         action = 'Oil',
         key = 'd',
+        keymap = 'SPC .',
       },
       {
         icon = '\u{f12e1} ',
-        desc = 'Recent Files',
+        desc = 'Browse Recent Files',
         group = 'Label',
         action = 'FzfLua oldfiles',
         key = 'r',
+        keymap = 'SPC s r',
       },
       {
         icon = '\u{f002} ',
@@ -230,6 +235,7 @@ require('dashboard').setup {
         group = 'Label',
         action = 'FzfLua grep',
         key = '/',
+        keymap = 'SPC /',
       },
       {
         icon = '\u{ec77} ',
@@ -237,6 +243,7 @@ require('dashboard').setup {
         group = 'Label',
         action = function() require("persistence").select() end,
         key = 's',
+        keymap = 'SPC q S',
       },
       {
         icon = '\u{f502} ',
@@ -244,13 +251,23 @@ require('dashboard').setup {
         group = 'Label',
         action = 'ProjectFzf',
         key = 'p',
+        keymap = 'SPC s p',
+      },
+      {
+        icon = '\u{f128d} ',
+        desc = 'Mason',
+        group = 'Config',
+        action = 'Mason',
+        key = 'm',
+        keymap = 'SPC v m',
       },
       {
         icon = '\u{e62b} ',
-        desc = 'Vim Config',
-        group = 'Label',
+        desc = 'Vim',
+        group = 'Config',
         action = fzf_vim_config,
         key = 'v',
+        keymap = 'SPC s v',
       },
     },
   },
@@ -263,8 +280,16 @@ vim.pack.add({
 require("oil").setup()
 nmap("Browse cwd", "<leader>sd", "<cmd>Oil<cr>")
 
+
+vim.pack.add{
+  { src = gh('neovim/nvim-lspconfig') },
+  { src = gh("mason-org/mason.nvim") },
+}
+
+require("mason").setup()
+nmap("Mason", "<leader>v", "<cmd>Mason<cr>")
+
 -- TODO: publish to github
--- TODO: lsp-config
 -- TODO: omnisharp or other dotnet plugin
 -- TODO: nvim-dap
 -- TODO: function and keybinding to update packages
