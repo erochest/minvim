@@ -298,6 +298,10 @@ vim.api.nvim_create_autocmd('LspAttach', {
   end,
 })
 
+-- TODO: noise or some way to see loading progress
+-- TODO: git gutter
+-- TODO: buffer tabs
+
 -- TODO: nvim-dap
 
 -- TODO: browse from CWD
