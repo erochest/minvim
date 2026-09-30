@@ -301,7 +301,13 @@ vim.api.nvim_create_autocmd('LspAttach', {
 -- TODO: nvim-dap
 
 -- TODO: jump and other QOL stuff
--- TODO: publish to github
 -- TODO: omnisharp or other dotnet plugin
 -- TODO: function and keybinding to update packages
 
+-- Path to your local configuration file
+local local_config = vim.fn.stdpath("config") .. "/lua/local.lua"
+
+-- Check if the local file exists before loading it
+if vim.fn.filereadable(local_config) == 1 then
+  require("local")
+end
