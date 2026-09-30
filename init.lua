@@ -27,6 +27,12 @@ local nmap = function(description, keys, definition)
   vim.keymap.set('n', keys, definition, { silent = true, desc = description })
 end
 
+local bnmap = function(buffer, description, keys, definition)
+  vim.keymap.set('n', keys, definition, {
+    silent = true, desc = description, buffer = buffer,
+  })
+end
+
 vim.pack.add({
   gh("shaunsingh/nord.nvim"),
 })
@@ -105,26 +111,6 @@ nmap('Jumps', '<leader>vj', '<cmd>FzfLua jumps <cr>')
 nmap('Registers', '<leader>vr', '<cmd>FzfLua registers<cr>')
 nmap('Options', '<leader>vo', '<cmd>FzfLua options<cr>')
 nmap('Keymaps', '<leader>vk', '<cmd>FzfLua keymaps<cr>')
-
--- LSP pickers
--- lsp_references	References
--- lsp_definitions	Definitions
--- lsp_declarations	Declarations
--- lsp_typedefs	Type Definitions
--- lsp_implementations	Implementations
--- lsp_document_symbols	Document Symbols
--- lsp_workspace_symbols	Workspace Symbols
--- lsp_live_workspace_symbols	Workspace Symbols (live query)
--- lsp_incoming_calls	Incoming Calls
--- lsp_outgoing_calls	Outgoing Calls
--- lsp_type_sub	Sub Types
--- lsp_type_super	Super Types
--- lsp_code_actions	Code Actions
--- lsp_finder	All LSP locations, combined view
--- diagnostics_document	Document Diagnostics
--- diagnostics_workspace	Workspace Diagnostics
--- lsp_document_diagnostics	alias to diagnostics_document
--- lsp_workspace_diagnostics	alias to diagnostics_workspace
 
 -- DAP pickers
 -- dap_commands	list,run nvim-dap builtin commands
@@ -288,6 +274,29 @@ vim.pack.add{
 
 require("mason").setup()
 nmap("Mason", "<leader>v", "<cmd>Mason<cr>")
+
+wk.add({ "<leader>c", group = "Code" })
+vim.api.nvim_create_autocmd('LspAttach', {
+  group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+  callback = function(ev)
+    local fzf = require('fzf-lua')
+
+    bnmap(ev.buffer, "Definitions", "gd", fzf.lsp_definitions)
+    bnmap(ev.buffer, "Declarations", "gd", fzf.lsp_declarations)
+    bnmap(ev.buffer, "Type definition", "<leader>ct", fzf.lsp_typedefs)
+
+    bnmap(ev.buffer, "References", "grr", fzf.lsp_references)
+    bnmap(ev.buffer, "Implementations", "gri", fzf.lsp_implementations)
+
+    bnmap(ev.buffer, "Symbols", "<leader>cs", fzf.lsp_document_symbols)
+    bnmap(ev.buffer, "Workspace Symbols", "<leader>cw", fzf.lsp_live_workspace_symbols)
+
+    bnmap(ev.buffer, "Buffer Diagnostics", "<space>cx", fzf.diagnostics_document)
+    bnmap(ev.buffer, "Workspace Diagnostics", "<leader>cX", fzf.diagnostics_workspace)
+
+    bnmap(ev.buffer, "Hover", "K", vim.lsp.buf.hover)
+  end,
+})
 
 -- TODO: nvim-dap
 
