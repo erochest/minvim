@@ -300,9 +300,15 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
 -- TODO: nvim-dap
 
+-- TODO: browse from CWD
+-- TODO: editor config
+-- TODO: window- and buffer-navigation keymaps
+-- TODO: border around LSP hover window
+-- TODO: lsp auto-enable
 -- TODO: jump and other QOL stuff
 -- TODO: omnisharp or other dotnet plugin
 -- TODO: function and keybinding to update packages
+-- TODO: neotest
 
 -- Path to your local configuration file
 local local_config = vim.fn.stdpath("config") .. "/lua/local.lua"
