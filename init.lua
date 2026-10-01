@@ -311,9 +311,11 @@ nmap("File Explorer", "<leader>e", "<cmd>Oil<cr>")
 vim.pack.add({
 	{ src = gh("neovim/nvim-lspconfig") },
 	{ src = gh("mason-org/mason.nvim") },
+	{ src = gh("mason-org/mason-lspconfig.nvim") },
 })
 
 require("mason").setup()
+require("mason-lspconfig").setup()
 nmap("Mason", "<leader>M", "<cmd>Mason<cr>")
 
 wk.add({
@@ -373,7 +375,6 @@ require("bufferline").setup()
 -- TODO: window- and buffer-navigation keymaps
 -- TODO: border around LSP hover window
 -- TODO: border around which-key window
--- TODO: lsp auto-enable
 -- TODO: omnisharp or other dotnet plugin
 -- TODO: function and keybinding to update packages
 -- TODO: neotest
