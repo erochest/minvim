@@ -411,6 +411,16 @@ vim.g.jiejie_config = {
 }
 nmap("JJ log", "<leader>gl", "<cmd>JJ log<cr>")
 
+-- Following along from https://tamerlan.dev/setting-up-a-testing-environment-in-neovim/
+vim.pack.add({
+	gh("nvim-neotest/nvim-nio"),
+	-- gh("nvim-lua/plenary.nvim"),
+	gh("antoinemadec/FixCursorHold.nvim"),
+	-- gh("nvim-treesitter/nvim-treesitter"),
+	-- gh("nvim-neotest/neotest-jest"),
+	gh("nvim-neotest/neotest"),
+})
+
 -- TODO: nvim-dap
 
 -- TODO: browse from CWD
