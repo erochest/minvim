@@ -404,6 +404,13 @@ nmap("Previous todo comment", "[t", function()
 end)
 nmap("Find TODOs", "<leader>ft", "<cmd>TodoFzfLua<cr>")
 
+vim.pack.add({ gh("jceb/jiejie.nvim") })
+vim.g.jiejie_config = {
+	default_view = 1,
+	log_revisions = 10,
+}
+nmap("JJ log", "<leader>gl", "<cmd>JJ log<cr>")
+
 -- TODO: nvim-dap
 
 -- TODO: browse from CWD
