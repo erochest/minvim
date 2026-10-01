@@ -22,15 +22,22 @@ local gh = function(path)
 	return "https://github.com/" .. path
 end
 
+vim.pack.add({
+	{ src = gh("folke/which-key.nvim") },
+})
+
+local wk = require("which-key")
+wk.setup()
+
 local nmap = function(description, keys, definition)
-	vim.keymap.set("n", keys, definition, { silent = true, desc = description })
+	wk.add({
+		{ keys, definition, desc = description, mode = "n" },
+	})
 end
 
 local bnmap = function(buffer, description, keys, definition)
-	vim.keymap.set("n", keys, definition, {
-		silent = true,
-		desc = description,
-		buffer = buffer,
+	wk.add({
+		{ keys, definition, desc = description, buffer = buffer },
 	})
 end
 
@@ -62,13 +69,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
 vim.pack.add({
 	{ src = gh("nvim-tree/nvim-web-devicons") },
 })
-
-vim.pack.add({
-	{ src = gh("folke/which-key.nvim") },
-})
-
-local wk = require("which-key")
-wk.setup({})
 
 vim.pack.add({
 	{ src = gh("ibhagwan/fzf-lua") },
@@ -267,6 +267,42 @@ nmap("which_key_ignore", "<c-_>", function()
 end)
 
 vim.pack.add({
+	gh("nvim-mini/mini.ai"),
+	gh("nvim-mini/mini.pairs"),
+	gh("nvim-mini/mini.snippets"),
+	gh("rafamadriz/friendly-snippets"),
+	gh("nvim-mini/mini.surround"),
+	gh("nvim-mini/mini.jump2d"),
+})
+require("mini.ai").setup()
+require("mini.pairs").setup()
+
+local mini_snippets = require("mini.snippets")
+local gen_loader = mini_snippets.gen_loader
+mini_snippets.setup({
+	snippets = {
+		gen_loader.from_lang(),
+	},
+})
+
+local snippets_group = vim.api.nvim_create_augroup("MiniSnippetsLSP", { clear = true })
+
+vim.api.nvim_create_autocmd({ "BufEnter" }, {
+	group = snippets_group,
+	pattern = "*",
+	callback = function()
+		-- Only start if mini.snippets is installed and not already running for this buffer
+		local ok, mini_snippets = pcall(require, "mini.snippets")
+		if ok then
+			mini_snippets.start_lsp_server()
+		end
+	end,
+})
+
+require("mini.surround").setup()
+require("mini.jump2d").setup()
+
+vim.pack.add({
 	gh("stevearc/oil.nvim"),
 })
 require("oil").setup()
@@ -334,11 +370,12 @@ vim.api.nvim_create_autocmd("LspProgress", {
 -- TODO: editor config
 -- TODO: window- and buffer-navigation keymaps
 -- TODO: border around LSP hover window
+-- TODO: border around which-key window
 -- TODO: lsp auto-enable
--- TODO: jump and other QOL stuff
 -- TODO: omnisharp or other dotnet plugin
 -- TODO: function and keybinding to update packages
 -- TODO: neotest
+-- TODO: edgy
 
 -- Path to your local configuration file
 local local_config = vim.fn.stdpath("config") .. "/lua/local.lua"
