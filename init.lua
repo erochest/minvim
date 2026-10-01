@@ -364,12 +364,12 @@ vim.api.nvim_create_autocmd("LspProgress", {
 vim.pack.add({ gh("lewis6991/gitsigns.nvim") })
 require("gitsigns").setup()
 
--- TODO: buffer tabs
+vim.pack.add({ gh("akinsho/bufferline.nvim") })
+require("bufferline").setup()
 
 -- TODO: nvim-dap
 
 -- TODO: browse from CWD
--- TODO: editor config
 -- TODO: window- and buffer-navigation keymaps
 -- TODO: border around LSP hover window
 -- TODO: border around which-key window
