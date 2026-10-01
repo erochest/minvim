@@ -361,7 +361,9 @@ vim.api.nvim_create_autocmd("LspProgress", {
 	end,
 })
 
--- TODO: git gutter
+vim.pack.add({ gh("lewis6991/gitsigns.nvim") })
+require("gitsigns").setup()
+
 -- TODO: buffer tabs
 
 -- TODO: nvim-dap
