@@ -22,6 +22,8 @@ local gh = function(path)
 	return "https://github.com/" .. path
 end
 
+vim.pack.add({ gh("nvim-lua/plenary.nvim") })
+
 vim.pack.add({
 	{ src = gh("folke/which-key.nvim") },
 })
@@ -83,7 +85,7 @@ local fzf_vim_config = function()
 end
 
 nmap("Global picker", "<leader><space>", "<cmd>FzfLua global<cr>")
-nmap("Files", "<leader>f", "<cmd>FzfLua files<cr>")
+nmap("Files", "<leader>F", "<cmd>FzfLua files<cr>")
 nmap("Grep picker", "<leader>/", "<cmd>FzfLua grep<cr>")
 nmap("Help", "<leader>h", "<cmd>FzfLua helptags<cr>")
 nmap("Undo", "<leader>u", "<cmd>FzfLua undotree<cr>")
@@ -386,6 +388,21 @@ nmap("Symbols (Trouble)", "<leader>cS", "<cmd>Trouble symbols toggle focus=false
 nmap("LSP definitions ... (Trouble)", "<leader>cl", "<cmd>Trouble lsp toggle focus=false win.position=right<cr>")
 nmap("Location List (Trouble)", "<leader>xL", "<cmd>Trouble loclist toggle<cr>")
 nmap("Quickfix List (Trouble)", "<leader>xQ", "<cmd>Trouble qflist toggle<cr>")
+
+local fzf_config = require("fzf-lua.config")
+local trouble_actions = require("trouble.sources.fzf").actions
+fzf_config.defaults.actions.files["ctrl-t"] = trouble_actions.open
+
+vim.pack.add({ gh("folke/todo-comments.nvim") })
+require("todo-comments").setup()
+
+nmap("Next todo comment", "]t", function()
+	require("todo-comments").jump_next()
+end)
+nmap("Previous todo comment", "[t", function()
+	require("todo-comments").jump_prev()
+end)
+nmap("Find TODOs", "<leader>ft", "<cmd>TodoFzfLua<cr>")
 
 -- TODO: nvim-dap
 
