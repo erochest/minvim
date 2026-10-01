@@ -373,9 +373,19 @@ vim.pack.add({ gh("akinsho/bufferline.nvim") })
 require("bufferline").setup()
 
 vim.pack.add({ "https://codeberg.org/mfussenegger/nvim-lint.git" })
-nmap("Lint", "<leader>cl", function()
+nmap("Lint", "<leader>cL", function()
 	require("lint").try_lint()
 end)
+
+vim.pack.add({ gh("folke/trouble.nvim") })
+require("trouble")
+wk.add({ "<leader>x", group = "Debug" })
+nmap("Diagnostics (Trouble)", "<leader>xx", "<cmd>Trouble diagnostics toggle<cr>")
+nmap("Buffer Diagnostics (Trouble)", "<leader>xX", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>")
+nmap("Symbols (Trouble)", "<leader>cS", "<cmd>Trouble symbols toggle focus=false<cr>")
+nmap("LSP definitions ... (Trouble)", "<leader>cl", "<cmd>Trouble lsp toggle focus=false win.position=right<cr>")
+nmap("Location List (Trouble)", "<leader>xL", "<cmd>Trouble loclist toggle<cr>")
+nmap("Quickfix List (Trouble)", "<leader>xQ", "<cmd>Trouble qflist toggle<cr>")
 
 -- TODO: nvim-dap
 

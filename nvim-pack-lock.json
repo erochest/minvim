@@ -97,6 +97,10 @@
       "rev": "882c996cf28183f4d63640de0b4c02ec886d01f2",
       "src": "https://github.com/folke/snacks.nvim"
     },
+    "trouble.nvim": {
+      "rev": "bd67efe408d4816e25e8491cc5ad4088e708a69a",
+      "src": "https://github.com/folke/trouble.nvim"
+    },
     "vim-gitgutter": {
       "rev": "90b75207bd9b55d8ac4af15f72b4e935462014d0",
       "src": "https://github.com/airblade/vim-gitgutter"
