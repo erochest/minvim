@@ -30,7 +30,7 @@ vim.pack.add({
 
 local wk = require("which-key")
 wk.setup({
-  preset = "modern",
+	preset = "modern",
 })
 
 local nmap = function(description, keys, definition)
@@ -182,7 +182,7 @@ vim.pack.add({
 require("project-fzf").setup()
 
 -- Map <leader>fp to open projects
-nmap("Search projects", "<leader>sp", "<cmd>ProjectFzf<CR>")
+nmap("Find project", "<leader>fp", "<cmd>ProjectFzf<CR>")
 
 vim.pack.add({
 	{ src = gh("folke/snacks.nvim") },
