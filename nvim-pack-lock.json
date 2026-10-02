@@ -8,6 +8,10 @@
       "rev": "28fe6e822ae344544c379d60fcb13c9519a1f08a",
       "src": "https://github.com/stevearc/aerial.nvim"
     },
+    "async.nvim": {
+      "rev": "15f28ec323a75f34f317336831c00c2d1b0a7192",
+      "src": "https://github.com/lewis6991/async.nvim"
+    },
     "blink.cmp": {
       "rev": "8219b58f1c11a2fb1644d3c7116c509fa8348ec0",
       "src": "https://github.com/saghen/blink.cmp"
@@ -132,6 +136,10 @@
     "project.nvim": {
       "rev": "8c6bad7d22eef1b71144b401c9f74ed01526a4fb",
       "src": "https://github.com/ahmedkhalf/project.nvim"
+    },
+    "refactoring.nvim": {
+      "rev": "684b3484796ea44595bebbfddee4fa4dbfc90939",
+      "src": "https://github.com/theprimeagen/refactoring.nvim"
     },
     "snacks.nvim": {
       "rev": "882c996cf28183f4d63640de0b4c02ec886d01f2",
