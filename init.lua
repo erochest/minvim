@@ -421,10 +421,16 @@ vim.pack.add({
 	gh("nvim-neotest/neotest"),
 })
 
+nmap("Next buffer", "L", "<cmd>bnext<cr>")
+nmap("Previous buffer", "H", "<cmd>bprevious<cr>")
+nmap("Focus pane right", "<c-l>", "<c-w>l")
+nmap("Focus pane left", "<c-h>", "<c-w>h")
+nmap("Focus pane up", "<c-k>", "<c-w>k")
+nmap("Focus pane down", "<c-j>", "<c-w>j")
+
 -- TODO: nvim-dap
 
 -- TODO: browse from CWD
--- TODO: window- and buffer-navigation keymaps
 -- TODO: border around LSP hover window
 -- TODO: border around which-key window
 -- TODO: omnisharp or other dotnet plugin
