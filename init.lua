@@ -462,7 +462,11 @@ nmap("Focus pane down", "<c-j>", "<c-w>j")
 
 vim.pack.add({
 	{ src = gh("saghen/blink.cmp") },
+	{ src = gh("danymat/neogen") },
 })
+
+require("neogen").setup({ snippet_engine = "mini" })
+nmap("Generate annotations", "<leader>cg", "<cmd>Neogen<cr>")
 
 -- TODO: terminal ESC
 -- TODO: terminal nushell on windows
