@@ -29,7 +29,9 @@ vim.pack.add({
 })
 
 local wk = require("which-key")
-wk.setup()
+wk.setup({
+  preset = "modern",
+})
 
 local nmap = function(description, keys, definition)
 	wk.add({
@@ -432,7 +434,6 @@ nmap("Focus pane down", "<c-j>", "<c-w>j")
 
 -- TODO: browse from CWD
 -- TODO: border around LSP hover window
--- TODO: border around which-key window
 -- TODO: omnisharp or other dotnet plugin
 -- TODO: function and keybinding to update packages
 -- TODO: neotest
