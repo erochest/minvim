@@ -460,7 +460,10 @@ nmap("Focus pane left", "<c-h>", "<c-w>h")
 nmap("Focus pane up", "<c-k>", "<c-w>k")
 nmap("Focus pane down", "<c-j>", "<c-w>j")
 
--- TODO: cmp
+vim.pack.add({
+	{ src = gh("saghen/blink.cmp") },
+})
+
 -- TODO: terminal ESC
 -- TODO: terminal nushell on windows
 -- TODO: browse from CWD
