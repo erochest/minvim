@@ -430,14 +430,17 @@ nmap("Focus pane left", "<c-h>", "<c-w>h")
 nmap("Focus pane up", "<c-k>", "<c-w>k")
 nmap("Focus pane down", "<c-j>", "<c-w>j")
 
--- TODO: nvim-dap
-
+-- TODO: cmp
+-- TODO: terminal ESC
+-- TODO: terminal nushell on windows
 -- TODO: browse from CWD
 -- TODO: border around LSP hover window
 -- TODO: omnisharp or other dotnet plugin
 -- TODO: function and keybinding to update packages
 -- TODO: neotest
+-- TODO: nvim-dap
 -- TODO: edgy
+-- TODO: break this file up
 
 -- Path to your local configuration file
 local local_config = vim.fn.stdpath("config") .. "/lua/local.lua"
