@@ -468,6 +468,17 @@ vim.pack.add({
 require("neogen").setup({ snippet_engine = "mini" })
 nmap("Generate annotations", "<leader>cg", "<cmd>Neogen<cr>")
 
+vim.pack.add({
+	{ src = gh("stevearc/aerial.nvim") },
+})
+require("aerial").setup({
+	on_attach = function(bufnr)
+		bnmap(bufnr, "Previous Aerial", "{", "<cmd>AerialPrev<cr>")
+		bnmap(bufnr, "Next Aerial", "}", "<cmd>AerialPrev<cr>")
+	end,
+})
+nmap("Toggle Aerial", "<leader>a", "<cmd>AerialToggle!<cr>")
+
 -- TODO: terminal ESC
 -- TODO: terminal nushell on windows
 -- TODO: browse from CWD
