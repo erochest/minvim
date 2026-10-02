@@ -118,7 +118,9 @@ nmap("Help", "<leader>fh", "<cmd>FzfLua helptags<cr>")
 nmap("Commands", "<leader>fc", "<cmd>FzfLua commands<cr>")
 nmap("Keymaps", "<leader>fk", "<cmd>FzfLua keymaps<cr>")
 nmap("Options", "<leader>fo", "<cmd>FzfLua options<cr>")
-nmap("Vim Config", "<leader>fv", fzf_vim_config)
+
+wk.add({ "<leader>C", group = "Config" })
+nmap("Vim Config", "<leader>Cv", fzf_vim_config)
 -- TODO: quickfix and location lists?
 
 wk.add({ "<leader>g", group = "Git/JJ" })
@@ -311,6 +313,17 @@ vim.pack.add({
 })
 require("oil").setup()
 nmap("File Explorer", "<leader>e", "<cmd>Oil<cr>")
+
+vim.pack.add({
+	{ src = gh("folke/neoconf.nvim") },
+})
+require("neoconf").setup()
+
+nmap("Show local/global JSON config files", "<leader>CC", "<cmd>Neoconf<cr>")
+nmap("Show local JSON config files", "<leader>Cl", "<cmd>Neoconf local<cr>")
+nmap("Show global JSON config files", "<leader>Cg", "<cmd>Neoconf global<cr>")
+nmap("Show merged config", "<leader>Cs", "<cmd>Neoconf show<cr>")
+nmap("Show merged LSP config", "<leader>CL", "<cmd>Neoconf lsp<cr>")
 
 vim.pack.add({
 	{ src = gh("neovim/nvim-lspconfig") },
