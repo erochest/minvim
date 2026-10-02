@@ -423,6 +423,36 @@ vim.pack.add({
 	gh("nvim-neotest/neotest"),
 })
 
+local neotest = require("neotest")
+wk.add({ "<leader>t", group = "Test" })
+nmap("Run nearest test", "<leader>tr", function()
+	neotest.run.run()
+end)
+nmap("Run current file", "<leader>tf", function()
+	neotest.run.run(vim.fn.epand("%"))
+end)
+nmap("Run all tests", "<leader>ta", function()
+	neotest.run.run({ suite = true })
+end)
+nmap("Debug nearest test", "<leader>td", function()
+	neotest.run.run({ suite = false, strategy = "dap" })
+end)
+nmap("Stop test", "<leader>ts", function()
+	neotest.run.stop()
+end)
+nmap("Attach to nearest test", "<leader>tn", function()
+	neotest.run.attach()
+end)
+nmap("Show test output", "<leader>to", function()
+	neotest.output.open()
+end)
+nmap("Toggle output panel", "<leader>tp", function()
+	neotest.output_panel.toggle()
+end)
+nmap("Toggle summary", "<leader>tv", function()
+	neotest.summary.toggle()
+end)
+
 nmap("Next buffer", "L", "<cmd>bnext<cr>")
 nmap("Previous buffer", "H", "<cmd>bprevious<cr>")
 nmap("Focus pane right", "<c-l>", "<c-w>l")
@@ -437,7 +467,6 @@ nmap("Focus pane down", "<c-j>", "<c-w>j")
 -- TODO: border around LSP hover window
 -- TODO: omnisharp or other dotnet plugin
 -- TODO: function and keybinding to update packages
--- TODO: neotest
 -- TODO: nvim-dap
 -- TODO: edgy
 -- TODO: break this file up
