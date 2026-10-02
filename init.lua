@@ -608,6 +608,32 @@ keymap.set({ "n", "x" }, "<leader>cr", function()
 	require("refactoring").select_refactor()
 end, { desc = "Select refactor" })
 
+vim.pack.add({
+	gh("mfussenegger/nvim-dap"),
+	gh("jay-babu/mason-nvim-dap.nvim"),
+	gh("theHamsta/nvim-dap-virtual-text"),
+	gh("igorlfs/nvim-dap-view"),
+})
+
+-- mason needs to be set up before mason-nvim-dap
+require("mason-nvim-dap").setup()
+
+nmap("Toggle Breakpoint", "<leader>xb", function()
+	require("dap").toggle_breakpoint()
+end)
+nmap("Continue Debugging", "<leader>xc", function()
+	require("dap").continue()
+end)
+nmap("Run to Cursor", "<leader>xC", function()
+	require("dap").run_to_cursor()
+end)
+nmap("Terminate Debugging", "<leader>xT", function()
+	require("dap").terminate()
+end)
+
+nmap("Toggle View", "<leader>xv")
+nmap("View Watch", "<leader>xw")
+
 if vim.loop.os_uname().sysname == "Windows_NT" then
 	-- need to use 'nu -l' for terminal
 	vim.opt.shell = "nu"
@@ -627,7 +653,6 @@ end
 
 -- TODO: border around LSP hover window
 -- TODO: function and keybinding to update packages
--- TODO: nvim-dap
 -- TODO: edgy
 -- TODO: break this file up
 -- TODO: nvim-navic and nvim-navbuddy
