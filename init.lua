@@ -608,15 +608,29 @@ keymap.set({ "n", "x" }, "<leader>cr", function()
 	require("refactoring").select_refactor()
 end, { desc = "Select refactor" })
 
--- TODO: terminal ESC
--- TODO: terminal nushell on windows
--- TODO: browse from CWD
+if vim.loop.os_uname().sysname == "Windows_NT" then
+	-- need to use 'nu -l' for terminal
+	vim.opt.shell = "nu"
+	vim.opt.shellcmdflag = "-c"
+	vim.opt.shellredir = "2>&1 | save --raw %s"
+	vim.opt.shellpipe = "2>&1 | save --raw %s"
+	vim.opt.shellquote = "'"
+	vim.opt.shellxquote = ""
+	-- if os.execute("command -v pwsh") == 0 then
+	--   vim.opt.shell = "pwsh"
+	-- else
+	--   vim.opt.shell = "C:\\Program Files\\PowerShell\\7\\pwsh.exe"
+	-- end
+
+	vim.opt.laststatus = 3
+end
+
 -- TODO: border around LSP hover window
--- TODO: omnisharp or other dotnet plugin
 -- TODO: function and keybinding to update packages
 -- TODO: nvim-dap
 -- TODO: edgy
 -- TODO: break this file up
+-- TODO: nvim-navic and nvim-navbuddy
 
 -- Path to your local configuration file
 local local_config = vim.fn.stdpath("config") .. "/lua/local.lua"
