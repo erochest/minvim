@@ -479,6 +479,24 @@ require("aerial").setup({
 })
 nmap("Toggle Aerial", "<leader>a", "<cmd>AerialToggle!<cr>")
 
+vim.pack.add({
+	{ src = gh("monaqa/dial.nvim") },
+})
+
+local dial_map = require("dial.map")
+nmap("Increment", "<c-a>", function()
+	dial_map.manipulate("increment", "normal")
+end)
+nmap("Increment", "g<c-a>", function()
+	dial_map.manipulate("increment", "gnormal")
+end)
+nmap("Decrement", "<c-x>", function()
+	dial_map.manipulate("decrement", "normal")
+end)
+nmap("Decrement", "g<c-x>", function()
+	dial_map.manipulate("decrement", "gnormal")
+end)
+
 -- TODO: terminal ESC
 -- TODO: terminal nushell on windows
 -- TODO: browse from CWD
