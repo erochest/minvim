@@ -45,7 +45,7 @@ end)
 -- <leader>KEY actions, lots of fzf
 nmap("Global picker", "<leader><space>", "<cmd>FzfLua global<cr>")
 nmap("Files", "<leader>F", "<cmd>FzfLua files<cr>")
-nmap("Grep picker", "<leader>/", "<cmd>FzfLua grep<cr>")
+nmap("Grep picker", "<leader>/", "<cmd>FzfLua live_grep<cr>")
 nmap("Help", "<leader>h", "<cmd>FzfLua helptags<cr>")
 nmap("Undo", "<leader>u", "<cmd>FzfLua undotree<cr>")
 nmap("Buffers", "<leader>,", "<cmd>FzfLua buffers<cr>")
@@ -99,6 +99,7 @@ nmap("Sessions", "<leader>fs", function()
 	require("persistence").select()
 end)
 nmap("Find project", "<leader>fp", "<cmd>ProjectFzf<CR>")
+-- TODO: this doesn't jump to the line when I select it
 nmap("Find TODOs", "<leader>ft", "<cmd>TodoFzfLua<cr>")
 -- Seems like these should be in a differenc submenu?
 nmap("Marks", "<leader>fm", "<cmd>FzfLua marks <cr>")
