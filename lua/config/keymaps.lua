@@ -1,11 +1,14 @@
 
--- TODO: organize by menu/depth
 -- TODO: can probably split this up somehow
+-- TODO: ESC-ESC to do hl-clear on search results
 
 local wk = require("which-key")
 local Snacks = require("snacks")
 local keymap = vim.keymap
-
+local fzf_config = require("fzf-lua.config")
+local trouble_actions = require("trouble.sources.fzf").actions
+local neotest = require("neotest")
+local dial_map = require("dial.map")
 
 local nmap = function(description, keys, definition)
 	wk.add({
@@ -25,6 +28,7 @@ local fzf_vim_config = function()
 	})
 end
 
+-- Buffer, pane, and other navigation
 nmap("Next buffer", "L", "<cmd>bnext<cr>")
 nmap("Previous buffer", "H", "<cmd>bprevious<cr>")
 nmap("Focus pane right", "<c-l>", "<c-w>l")
@@ -32,28 +36,69 @@ nmap("Focus pane left", "<c-h>", "<c-w>h")
 nmap("Focus pane up", "<c-k>", "<c-w>k")
 nmap("Focus pane down", "<c-j>", "<c-w>j")
 
+nmap("Next todo comment", "]t", function()
+	require("todo-comments").jump_next()
+end)
+nmap("Previous todo comment", "[t", function()
+	require("todo-comments").jump_prev()
+end)
+
+-- <leader>KEY actions, lots of fzf
 nmap("Global picker", "<leader><space>", "<cmd>FzfLua global<cr>")
 nmap("Files", "<leader>F", "<cmd>FzfLua files<cr>")
 nmap("Grep picker", "<leader>/", "<cmd>FzfLua grep<cr>")
 nmap("Help", "<leader>h", "<cmd>FzfLua helptags<cr>")
 nmap("Undo", "<leader>u", "<cmd>FzfLua undotree<cr>")
 nmap("Buffers", "<leader>,", "<cmd>FzfLua buffers<cr>")
-nmap("Last buffer", "<leader>'", "<cmd>buffer #<cr>")
+nmap("Last buffer", "<leader>`", "<cmd>buffer #<cr>")
 nmap("Command History", "<leader>:", "<cmd>FzfLua command_history<cr>")
 nmap("Notifications", "<leader>n", function()
 	Snacks.picker.notifications()
 end)
 nmap("Spelling Suggestions", "<leader>z", "<cmd>FzfLua spell_suggest<cr>")
+nmap("Toggle Scratch Buffer", "<leader>.", function()
+	Snacks.scratch()
+end)
+nmap("Select Scratch Buffer", "<leader>S", function()
+	Snacks.scratch.select()
+end)
+nmap("Toggle Terminal", "<c-/>", function()
+	Snacks.terminal()
+end)
+nmap("which_key_ignore", "<c-_>", function()
+	Snacks.terminal()
+end)
+nmap("File Explorer", "<leader>e", "<cmd>Oil<cr>")
+nmap("Mason", "<leader>M", "<cmd>Mason<cr>")
+nmap("Toggle Aerial", "<leader>a", "<cmd>AerialToggle!<cr>")
 
+fzf_config.defaults.actions.files["ctrl-t"] = trouble_actions.open
+
+nmap("Increment", "<c-a>", function()
+	dial_map.manipulate("increment", "normal")
+end)
+nmap("Increment", "g<c-a>", function()
+	dial_map.manipulate("increment", "gnormal")
+end)
+nmap("Decrement", "<c-x>", function()
+	dial_map.manipulate("decrement", "normal")
+end)
+nmap("Decrement", "g<c-x>", function()
+	dial_map.manipulate("decrement", "gnormal")
+end)
+
+-- Find leader-menu
 wk.add({ "<leader>f", group = "Find" })
 nmap("Word", "<leader>fw", "<cmd>FzfLua grep_cword<cr>")
 nmap("Lines", "<leader>fl", "<cmd>FzfLua blines<cr>")
 nmap("Buffers", "<leader>fb", "<cmd>FzfLua buffers<cr>")
 nmap("Recent Files", "<leader>fr", "<cmd>FzfLua oldfiles<cr>")
 nmap("Files", "<leader>ff", "<cmd>FzfLua files<cr>")
-nmap("Projects", "<leader>fp", function()
-	require("persistence").save()
+nmap("Sessions", "<leader>fs", function()
+	require("persistence").select()
 end)
+nmap("Find project", "<leader>fp", "<cmd>ProjectFzf<CR>")
+nmap("Find TODOs", "<leader>ft", "<cmd>TodoFzfLua<cr>")
 -- Seems like these should be in a differenc submenu?
 nmap("Marks", "<leader>fm", "<cmd>FzfLua marks <cr>")
 nmap("Jumps", "<leader>fj", "<cmd>FzfLua jumps <cr>")
@@ -65,19 +110,39 @@ nmap("Commands", "<leader>fc", "<cmd>FzfLua commands<cr>")
 nmap("Keymaps", "<leader>fk", "<cmd>FzfLua keymaps<cr>")
 nmap("Options", "<leader>fo", "<cmd>FzfLua options<cr>")
 
+-- Config leader-menu
 wk.add({ "<leader>C", group = "Config" })
 nmap("Vim Config", "<leader>Cv", fzf_vim_config)
+nmap("Show local/global JSON config files", "<leader>CC", "<cmd>Neoconf<cr>")
+nmap("Show local JSON config files", "<leader>Cl", "<cmd>Neoconf local<cr>")
+nmap("Show global JSON config files", "<leader>Cg", "<cmd>Neoconf global<cr>")
+nmap("Show merged config", "<leader>Cs", "<cmd>Neoconf show<cr>")
+nmap("Show merged LSP config", "<leader>CL", "<cmd>Neoconf lsp<cr>")
+
 -- TODO: quickfix and location lists?
 
+-- Git/JJ leader-menu
 wk.add({ "<leader>g", group = "Git/JJ" })
 nmap("Git Commit picker", "<leader>gc", "<cmd>FzfLua git_commits<cr>")
 nmap("Git File History", "<leader>gh", "<cmd>FzfLua git_bcommits<cr>")
 nmap("Git Blame", "<leader>gB", "<cmd>FzfLua git_blame<cr>")
 nmap("Git Branches", "<leader>gb", "<cmd>FzfLua git_branches<cr>")
+nmap("JJ log", "<leader>gl", "<cmd>JJ log<cr>")
 
+-- UI leader menu
 wk.add({ "<leader>u", group = "UI" })
 nmap("Colorschemes", "<leader>uC", "<cmd>FzfLua colorschemes<cr>")
+nmap("Toggle Zen Mode", "<leader>uz", function()
+	Snacks.zen()
+end)
+nmap("Toggle Zoom", "<leader>uZ", function()
+	Snacks.zen.zoom()
+end)
+nmap("Dismiss All Notifications", "<leader>un", function()
+	Snacks.notifier.hide()
+end)
 
+-- Quit leader menu
 wk.add({
 	{ "<leader>q", group = "Quit" },
 })
@@ -94,74 +159,16 @@ end)
 nmap("Stop session saving", "<leader>qd", function()
 	require("persistence").stop()
 end)
+nmap("Quit", "<leader>qq", "<cmd>waq<cr>")
 
--- Map <leader>fp to open projects
-nmap("Find project", "<leader>fp", "<cmd>ProjectFzf<CR>")
-
-nmap("Toggle Zen Mode", "<leader>uz", function()
-	Snacks.zen()
-end)
-nmap("Toggle Zoom", "<leader>uZ", function()
-	Snacks.zen.zoom()
-end)
-nmap("Toggle Scratch Buffer", "<leader>.", function()
-	Snacks.scratch()
-end)
-nmap("Select Scratch Buffer", "<leader>S", function()
-	Snacks.scratch.select()
-end)
-
+-- Buffer leader menu
+-- TODO: worth keeping?
 wk.add({ "<leader>b", group = "Buffer" })
 nmap("Delete Buffer", "<leader>bd", function()
 	Snacks.bufdelete()
 end)
-nmap("Rename File", "<leader>cR", function()
-	Snacks.rename.rename_file()
-end)
-nmap("Dismiss All Notifications", "<leader>un", function()
-	Snacks.notifier.hide()
-end)
-nmap("Toggle Terminal", "<c-/>", function()
-	Snacks.terminal()
-end)
-nmap("which_key_ignore", "<c-_>", function()
-	Snacks.terminal()
-end)
 
-nmap("Toggle Zen Mode", "<leader>uz", function()
-	Snacks.zen()
-end)
-nmap("Toggle Zoom", "<leader>uZ", function()
-	Snacks.zen.zoom()
-end)
-nmap("Toggle Scratch Buffer", "<leader>.", function()
-	Snacks.scratch()
-end)
-nmap("Select Scratch Buffer", "<leader>S", function()
-	Snacks.scratch.select()
-end)
-
-wk.add({ "<leader>b", group = "Buffer" })
-nmap("Delete Buffer", "<leader>bd", function()
-	Snacks.bufdelete()
-end)
-nmap("Rename File", "<leader>cR", function()
-	Snacks.rename.rename_file()
-end)
-nmap("Dismiss All Notifications", "<leader>un", function()
-	Snacks.notifier.hide()
-end)
-nmap("Toggle Terminal", "<c-/>", function()
-	Snacks.terminal()
-end)
-nmap("which_key_ignore", "<c-_>", function()
-	Snacks.terminal()
-end)
-
-nmap("File Explorer", "<leader>e", "<cmd>Oil<cr>")
-
-nmap("Mason", "<leader>M", "<cmd>Mason<cr>")
-
+-- Code leader menu
 wk.add({
 	{ "<leader>c", group = "Code" },
 	{ "gr", group = "References" },
@@ -192,40 +199,47 @@ vim.api.nvim_create_autocmd("LspAttach", {
 	end,
 })
 
-nmap("Show local/global JSON config files", "<leader>CC", "<cmd>Neoconf<cr>")
-nmap("Show local JSON config files", "<leader>Cl", "<cmd>Neoconf local<cr>")
-nmap("Show global JSON config files", "<leader>Cg", "<cmd>Neoconf global<cr>")
-nmap("Show merged config", "<leader>Cs", "<cmd>Neoconf show<cr>")
-nmap("Show merged LSP config", "<leader>CL", "<cmd>Neoconf lsp<cr>")
-
+nmap("Rename File", "<leader>cR", function()
+	Snacks.rename.rename_file()
+end)
 nmap("Lint", "<leader>cL", function()
 	require("lint").try_lint()
 end)
+nmap("Symbols (Trouble)", "<leader>cS", "<cmd>Trouble symbols toggle focus=false<cr>")
+nmap("LSP definitions ... (Trouble)", "<leader>cl", "<cmd>Trouble lsp toggle focus=false win.position=right<cr>")
+nmap("Generate annotations", "<leader>cg", "<cmd>Neogen<cr>")
 
+keymap.set({ "n", "x" }, "<leader>cr", function()
+	-- this keymap doesn't select any textobject by default, so you may need to provide one each time you use it.
+	require("refactoring").select_refactor()
+end, { desc = "Select refactor" })
+
+-- Debug leader menu
+-- TODO: make these commands more context-aware
+-- eg, only load DAP commands when there's a relevant DAP adapter
 wk.add({ "<leader>x", group = "Debug" })
 nmap("Diagnostics (Trouble)", "<leader>xx", "<cmd>Trouble diagnostics toggle<cr>")
 nmap("Buffer Diagnostics (Trouble)", "<leader>xX", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>")
-nmap("Symbols (Trouble)", "<leader>cS", "<cmd>Trouble symbols toggle focus=false<cr>")
-nmap("LSP definitions ... (Trouble)", "<leader>cl", "<cmd>Trouble lsp toggle focus=false win.position=right<cr>")
 nmap("Location List (Trouble)", "<leader>xL", "<cmd>Trouble loclist toggle<cr>")
 nmap("Quickfix List (Trouble)", "<leader>xQ", "<cmd>Trouble qflist toggle<cr>")
-
-local fzf_config = require("fzf-lua.config")
-local trouble_actions = require("trouble.sources.fzf").actions
-fzf_config.defaults.actions.files["ctrl-t"] = trouble_actions.open
-
-nmap("Next todo comment", "]t", function()
-	require("todo-comments").jump_next()
+nmap("Toggle Breakpoint", "<leader>xb", function()
+	require("dap").toggle_breakpoint()
 end)
-nmap("Previous todo comment", "[t", function()
-	require("todo-comments").jump_prev()
+nmap("Continue Debugging", "<leader>xc", function()
+	require("dap").continue()
 end)
-nmap("Find TODOs", "<leader>ft", "<cmd>TodoFzfLua<cr>")
+nmap("Run to Cursor", "<leader>xC", function()
+	require("dap").run_to_cursor()
+end)
+nmap("Terminate Debugging", "<leader>xT", function()
+	require("dap").terminate()
+end)
 
-nmap("JJ log", "<leader>gl", "<cmd>JJ log<cr>")
+nmap("Toggle View", "<leader>xv")
+nmap("View Watch", "<leader>xw")
 
+-- Test leader menu
 -- Following along from https://tamerlan.dev/setting-up-a-testing-environment-in-neovim/
-local neotest = require("neotest")
 wk.add({ "<leader>t", group = "Test" })
 nmap("Run nearest test", "<leader>tr", function()
 	neotest.run.run()
@@ -255,24 +269,7 @@ nmap("Toggle summary", "<leader>tv", function()
 	neotest.summary.toggle()
 end)
 
-nmap("Generate annotations", "<leader>cg", "<cmd>Neogen<cr>")
-
-nmap("Toggle Aerial", "<leader>a", "<cmd>AerialToggle!<cr>")
-
-local dial_map = require("dial.map")
-nmap("Increment", "<c-a>", function()
-	dial_map.manipulate("increment", "normal")
-end)
-nmap("Increment", "g<c-a>", function()
-	dial_map.manipulate("increment", "gnormal")
-end)
-nmap("Decrement", "<c-x>", function()
-	dial_map.manipulate("decrement", "normal")
-end)
-nmap("Decrement", "g<c-x>", function()
-	dial_map.manipulate("decrement", "gnormal")
-end)
-
+-- Refactoring and Print Refactoring leader menu
 wk.add({
 	{ "<leader>r", "Refactoring" },
 	{ "<leader>p", "Print Refactor" },
@@ -355,25 +352,4 @@ keymap.set({ "x", "n" }, "<leader>pc", function()
 	-- this keymap doesn't select any textobject by default, so you need to provide one each time you use it.
 	return require("refactoring.debug").cleanup({ restore_view = true })
 end, { desc = "Debug print clean", expr = true, remap = true })
-
-keymap.set({ "n", "x" }, "<leader>cr", function()
-	-- this keymap doesn't select any textobject by default, so you may need to provide one each time you use it.
-	require("refactoring").select_refactor()
-end, { desc = "Select refactor" })
-
-nmap("Toggle Breakpoint", "<leader>xb", function()
-	require("dap").toggle_breakpoint()
-end)
-nmap("Continue Debugging", "<leader>xc", function()
-	require("dap").continue()
-end)
-nmap("Run to Cursor", "<leader>xC", function()
-	require("dap").run_to_cursor()
-end)
-nmap("Terminate Debugging", "<leader>xT", function()
-	require("dap").terminate()
-end)
-
-nmap("Toggle View", "<leader>xv")
-nmap("View Watch", "<leader>xw")
 
