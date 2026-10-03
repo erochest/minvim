@@ -26,8 +26,7 @@ require("bufferline").setup()
 require("todo-comments").setup()
 require("aerial").setup({
 	on_attach = function(bufnr)
-    -- TODO: umm. i use the default definition of these
-		bnmap(bufnr, "Previous Aerial", "{", "<cmd>AerialPrev<cr>")
-		bnmap(bufnr, "Next Aerial", "}", "<cmd>AerialPrev<cr>")
+		bnmap(bufnr, "Previous Aerial", "[{", "<cmd>AerialPrev<cr>")
+		bnmap(bufnr, "Next Aerial", "]}", "<cmd>AerialPrev<cr>")
 	end,
 })
