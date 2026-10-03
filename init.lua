@@ -474,6 +474,7 @@ nmap("Focus pane up", "<c-k>", "<c-w>k")
 nmap("Focus pane down", "<c-j>", "<c-w>j")
 
 vim.pack.add({
+	{ src = gh("saghen/blink.lib") },
 	{ src = gh("saghen/blink.cmp") },
 	{ src = gh("danymat/neogen") },
 })
