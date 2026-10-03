@@ -315,17 +315,6 @@ require("oil").setup()
 nmap("File Explorer", "<leader>e", "<cmd>Oil<cr>")
 
 vim.pack.add({
-	{ src = gh("folke/neoconf.nvim") },
-})
-require("neoconf").setup()
-
-nmap("Show local/global JSON config files", "<leader>CC", "<cmd>Neoconf<cr>")
-nmap("Show local JSON config files", "<leader>Cl", "<cmd>Neoconf local<cr>")
-nmap("Show global JSON config files", "<leader>Cg", "<cmd>Neoconf global<cr>")
-nmap("Show merged config", "<leader>Cs", "<cmd>Neoconf show<cr>")
-nmap("Show merged LSP config", "<leader>CL", "<cmd>Neoconf lsp<cr>")
-
-vim.pack.add({
 	{ src = gh("neovim/nvim-lspconfig") },
 	{ src = gh("mason-org/mason.nvim") },
 	{ src = gh("mason-org/mason-lspconfig.nvim") },
@@ -379,6 +368,17 @@ vim.api.nvim_create_autocmd("LspProgress", {
 		})
 	end,
 })
+
+vim.pack.add({
+	{ src = gh("folke/neoconf.nvim") },
+})
+require("neoconf").setup()
+
+nmap("Show local/global JSON config files", "<leader>CC", "<cmd>Neoconf<cr>")
+nmap("Show local JSON config files", "<leader>Cl", "<cmd>Neoconf local<cr>")
+nmap("Show global JSON config files", "<leader>Cg", "<cmd>Neoconf global<cr>")
+nmap("Show merged config", "<leader>Cs", "<cmd>Neoconf show<cr>")
+nmap("Show merged LSP config", "<leader>CL", "<cmd>Neoconf lsp<cr>")
 
 vim.pack.add({ gh("stevearc/conform.nvim") })
 require("conform").setup()
