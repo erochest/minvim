@@ -1,6 +1,5 @@
 
 -- TODO: can probably split this up somehow
--- TODO: ESC-ESC to do hl-clear on search results
 
 local wk = require("which-key")
 local Snacks = require("snacks")
@@ -86,6 +85,8 @@ end)
 nmap("Decrement", "g<c-x>", function()
 	dial_map.manipulate("decrement", "gnormal")
 end)
+
+nmap("Clear highlighting", "<ESC><ESC>", "<cmd>nohlsearch<cr>")
 
 -- Find leader-menu
 wk.add({ "<leader>f", group = "Find" })
