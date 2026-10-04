@@ -1,4 +1,7 @@
 
+-- TODO: rust clippy
+-- TODO: formatting seems awkward
+
 local utils = require("user.utils")
 
 vim.pack.add({

@@ -3,6 +3,7 @@ local utils = require("user.utils")
 
 vim.pack.add({
 	utils.gh("ibhagwan/fzf-lua"),
+  -- TODO: seems to be an issue with this plugin
   utils.gh("folke/persistence.nvim"),
   utils.gh("ahmedkhalf/project.nvim"),
   utils.gh("jakobwesthoff/project-fzf.nvim"),

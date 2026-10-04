@@ -23,9 +23,11 @@ require("lualine").setup({
 })
 
 require("bufferline").setup()
+require("trouble").setup()
 require("todo-comments").setup()
 require("aerial").setup({
 	on_attach = function(bufnr)
+    -- TODO: bnmap isn't defined here
 		bnmap(bufnr, "Previous Aerial", "[{", "<cmd>AerialPrev<cr>")
 		bnmap(bufnr, "Next Aerial", "]}", "<cmd>AerialPrev<cr>")
 	end,

@@ -1,5 +1,8 @@
 
 -- TODO: can probably split this up somehow
+-- TODO: ]d (next diagnostic) should pop up the message
+-- TODO: [] motions on classes, functions, etc
+-- TODO: where is rename symbol (LSP)?
 
 local wk = require("which-key")
 local Snacks = require("snacks")
