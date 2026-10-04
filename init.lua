@@ -1,4 +1,6 @@
 
+-- TODO: https://github.com/Davidyz/VectorCode
+
 require("config.options")
 
 require("plugins.core")

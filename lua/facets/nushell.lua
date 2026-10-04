@@ -1,6 +1,7 @@
 
 local utils = require("user.utils")
 
-utils.ensure_installed({
-})
+vim.lsp.enable({'nushell'})
+
+-- TODO: treesitter: nu
 

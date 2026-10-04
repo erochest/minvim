@@ -2,7 +2,5 @@
 local utils = require("user.utils")
 
 utils.ensure_installed({
-  "angular-language-server",
-  "djlint",
+  "fish-lsp",
 })
-
